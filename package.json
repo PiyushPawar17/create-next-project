@@ -1,6 +1,6 @@
 {
 	"name": "create-next-project",
-	"description": "Creates a Next.js project with my prefered configurations",
+	"description": "Creates a Next.js project with my preferred configurations",
 	"version": "0.1.0",
 	"license": "MIT",
 	"bin": {

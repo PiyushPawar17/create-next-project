@@ -2,7 +2,7 @@
 
 /**
  * create-next-project
- * Creates a Next.js project with my prefered configurations
+ * Creates a Next.js project with my preferred configurations
  *
  * @author Piyush <https://piyushpawar.dev>
  */
