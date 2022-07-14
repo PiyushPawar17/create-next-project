@@ -35,8 +35,8 @@ const cnpCli = () => {
 		devDependencies.push('sass');
 	}
 
-	const scripts = new Scripts(devDependencies, flags);
-	scripts.run();
+	// const scripts = new Scripts(devDependencies, flags);
+	// scripts.run();
 };
 
 cnpCli();

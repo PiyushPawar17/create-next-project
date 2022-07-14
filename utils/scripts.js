@@ -1,5 +1,5 @@
 const { spawn } = require('child_process');
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 
 const eslintConfig = require('../templates/eslintrc.template');
@@ -16,13 +16,7 @@ class Scripts {
 		this.#flags = flags;
 
 		/** Commands to run on every project */
-		this.#commands.push(
-			'yarn create next-app . --typescript',
-			`yarn add --dev ${devDependencies.join(' ')}`,
-			'rm .eslintrc.json',
-			'rm -rf ./pages/api',
-			'rm ./styles/*'
-		);
+		this.#commands.push('yarn create next-app . --typescript', `yarn add --dev ${devDependencies.join(' ')}`);
 
 		if (flags.tailwind) {
 			this.#commands.push('npx tailwindcss init -p');
@@ -55,6 +49,11 @@ class Scripts {
 	}
 
 	#udpateConfig() {
+		/** Remove files */
+		fs.unlinkSync(path.resolve(process.cwd(), '.eslintrc.json'));
+		fs.rmSync(path.resolve(process.cwd(), 'pages', 'api'), { recursive: true, force: true });
+		fs.emptydirSync(path.resolve(process.cwd(), 'styles'));
+
 		/** Update package.json to include prettier format script */
 		const packageJson = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), 'package.json'), 'utf8'));
 		packageJson.scripts.format = 'prettier --write **/*.{ts,tsx,js,json,scss}';
@@ -112,13 +111,9 @@ class Scripts {
 
 	#updateProject() {
 		/** Closing commands to finish the project setup */
-		this.#commands.push(
-			'yarn format',
-			'rm -rf .git',
-			'git init',
-			'git add .',
-			'git commit -m "🎉 feat: intial commit"'
-		);
+		fs.rmSync(path.resolve(process.cwd(), '.git'), { recursive: true, force: true });
+
+		this.#commands.push('yarn format', 'git init', 'git add .', 'git commit -m ":tada: feat: intial commit"');
 
 		this.run();
 	}
