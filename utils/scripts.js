@@ -50,7 +50,9 @@ class Scripts {
 
 	#udpateConfig() {
 		/** Remove files */
-		fs.unlinkSync(path.resolve(process.cwd(), '.eslintrc.json'));
+		if (fs.existsSync(path.resolve(process.cwd(), '.eslintrc.json'))) {
+			fs.unlinkSync(path.resolve(process.cwd(), '.eslintrc.json'));
+		}
 		fs.rmSync(path.resolve(process.cwd(), 'pages', 'api'), { recursive: true, force: true });
 		fs.emptydirSync(path.resolve(process.cwd(), 'styles'));
 
